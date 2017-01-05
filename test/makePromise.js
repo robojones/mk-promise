@@ -39,11 +39,19 @@ describe('makePromise(asyncFn, ...args)', function () {
         }
     })
 
-    it('should reject the promise if asyncFn is not a function', function (cb) {
+    it('should reject the promise if asyncFn is not a function', function () {
         promify('no function', false, 'example').then(() => {
-            cb(new Error('promise resolved'))
-        }).catch(() => {
-            cb()
+            assert(new Error('promise resolved'))
+        }).catch(err => {
+
+        })
+    })
+
+    it('should reject the promise if the callback gets a first argument', function () {
+        return promify(this.asyncFn, true, 'example').then(args => {
+            assert(new Error('promise resolved'))
+        }).catch(err => {
+            
         })
     })
 
