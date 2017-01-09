@@ -1,6 +1,6 @@
 {
   "name": "mk-promise",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "don't use callbacks - use promises",
   "main": "makePromise.js",
   "scripts": {
