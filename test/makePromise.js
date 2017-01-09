@@ -47,17 +47,26 @@ describe('makePromise(asyncFn, ...args)', function () {
         })
     })
 
-    it('should reject the promise if the callback gets a first argument', function () {
-        return promify(this.asyncFn, true, 'example').then(args => {
-            assert(new Error('promise resolved'))
-        }).catch(err => {
-
+    it('should resolve the promise', function () {
+        return promify(this.asyncFn, false, 'example').then(r => {
+            assert.deepEqual(r.slice(1), ARGUMENTS)
         })
     })
 
-    it('should resolve the promise with the arguments of the callback (as array)', function () {
-        return promify(this.asyncFn, false, 'example').withError().then(args => {
-            assert.deepEqual(args, ARGUMENTS)
+    describe('SpecialPromise', function () {
+        it('should reject the promise with the first argument of the callback', function (cb) {
+            promify(this.asyncFn, true, 'example').withError().then(r => {
+                cb(new Error('promise not rejected'))
+            }).catch(err => {
+                cb()
+            })
+        })
+
+        it('should resolve the promise with the arguments of the callback (as array)', function () {
+            return promify(this.asyncFn, false, 'example').withError().then(args => {
+                assert.deepEqual(args, ARGUMENTS)
+            })
         })
     })
+
 })
