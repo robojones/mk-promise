@@ -51,12 +51,12 @@ describe('makePromise(asyncFn, ...args)', function () {
         return promify(this.asyncFn, true, 'example').then(args => {
             assert(new Error('promise resolved'))
         }).catch(err => {
-            
+
         })
     })
 
     it('should resolve the promise with the arguments of the callback (as array)', function () {
-        return promify(this.asyncFn, false, 'example').then(args => {
+        return promify(this.asyncFn, false, 'example').withError().then(args => {
             assert.deepEqual(args, ARGUMENTS)
         })
     })
